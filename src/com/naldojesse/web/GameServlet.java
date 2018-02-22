@@ -22,11 +22,9 @@ public class GameServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-//        int answer = (int) session.getAttribute("genNUmber");
-
         int answer = (int) session.getAttribute("genNumber");
 
-        request.setAttribute("answer", answer);
+//        request.setAttribute("answer", answer);
         request.setAttribute("number", request.getParameter("user_num"));
 
         String user_input = request.getParameter("user_num");
@@ -42,7 +40,15 @@ public class GameServlet extends HttpServlet {
             if (request.getParameter("action").equals("play-again")) {
                 System.out.println("resetting");
                 session.removeAttribute("genNumber");
+                session.removeAttribute("min");
+                session.removeAttribute("max");
             }
+        }
+
+
+        if (request.getParameter("min") != null) {
+            session.setAttribute("min", request.getParameter("min"));
+            session.setAttribute("max", request.getParameter("max"));
         }
 
         if (session.getAttribute("genNumber") == null) {

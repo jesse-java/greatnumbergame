@@ -13,27 +13,40 @@
   </head>
   <body>
   <h1>Welcome to the Great Number Game!</h1>
-  <p>I am thinking of a number between 1 and 100 </p>
+  <p>I am thinking of a number between</p>
+
   <p>Take a guess!</p>
 
-  <c:if test="${requestScope.number < requestScope.answer}">
+  <p><c:out value="${sessionScope.answer}"/></p>
+
+  <c:if test="${requestScope.number < sessionScope.genNumber}">
     <p>Too Low!</p>
   </c:if>
-  <c:if test="${requestScope.number > requestScope.answer}">
+  <c:if test="${requestScope.number > sessionScope.genNumber}">
     <p>Too High!</p>
   </c:if>
-  <c:if test="${requestScope.number == requestScope.answer && requestScope.answer != null}">
+  <c:if test="${requestScope.number == sessionScope.genNumber && sessionScope.genNumber != null}">
     <p><c:out value="${answer} was the number!"/></p>
     <a href="<c:url value="/?action=play-again"/>">Play Again!</a>
     <a href=""></a>
   </c:if>
-  <p>Answer: <c:out value="${answer}"/></p>
-  <p>Your Guess: <c:out value="${number}"/></p>
 
-  <form action="/" method="post">
-    <input type="number" name="user_num" >
-    <input type="submit" value="Submit">
-  </form>
+
+  <c:if test="${sessionScope.min == null}" >
+    Choose your range!
+    <form action="/" method="get">
+      Min: <input type="number" name="min">
+      Max: <input type="number" name="max">
+      <input type="submit" value="Submit">
+    </form>
+  </c:if>
+
+  <c:if test="${sessionScope.min != null}" >
+    <form action="/" method="post">
+      <input type="number" name="user_num" >
+      <input type="submit" value="Submit">
+    </form>
+  </c:if>
 
   </body>
 </html>
